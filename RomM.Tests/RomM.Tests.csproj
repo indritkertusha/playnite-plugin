@@ -45,6 +45,12 @@
     <Compile Include="..\Games\RomMMetadataMapper.cs" Link="Linked\Games\RomMMetadataMapper.cs" />
     <Compile Include="..\Games\RomMServerVersion.cs" Link="Linked\Games\RomMServerVersion.cs" />
     <Compile Include="..\Games\RomMRomQuery.cs" Link="Linked\Games\RomMRomQuery.cs" />
+    <Compile Include="..\Games\RomMUrl.cs" Link="Linked\Games\RomMUrl.cs" />
+    <Compile Include="..\Games\RomMRevisionFactory.cs" Link="Linked\Games\RomMRevisionFactory.cs" />
+    <Compile Include="..\Games\RomMInstallPaths.cs" Link="Linked\Games\RomMInstallPaths.cs" />
+    <Compile Include="..\Games\RomMCompletionStatus.cs" Link="Linked\Games\RomMCompletionStatus.cs" />
+    <Compile Include="..\Games\RomMHash.cs" Link="Linked\Games\RomMHash.cs" />
+    <Compile Include="..\Games\RomMSiblings.cs" Link="Linked\Games\RomMSiblings.cs" />
   </ItemGroup>
 
 </Project>
