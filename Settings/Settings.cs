@@ -567,8 +567,9 @@ namespace RomM.Settings
                 image.EndInit();
                 return image;
             }
-            catch
+            catch (Exception ex)
             {
+                LogManager.GetLogger().Warn($"[Settings] Failed to load profile image from '{path}': {ex.Message}");
                 return null;
             }
         }
