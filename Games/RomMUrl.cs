@@ -7,5 +7,10 @@ namespace RomM.Games
     {
         public static string Combine(string baseUrl, string relativePath)
             => $"{baseUrl?.TrimEnd('/')}/{relativePath?.TrimStart('/') ?? ""}";
+
+        // Most per-rom media (miximage, fanart, manuals, video) comes back as a path relative to
+        // RomM's resource mount rather than a full URL.
+        public static string Resource(string baseUrl, string relativePath)
+            => Combine(baseUrl, $"assets/romm/resources/{relativePath?.TrimStart('/')}");
     }
 }

@@ -21,8 +21,12 @@ namespace RomM.Tests
             },
             ""ss_metadata"": {
                 ""miximage_path"": ""roms/2/32/miximage/miximage.png"",
-                ""miximage_url"": ""https://neoclone.screenscraper.fr/api2/mediaJeu.php?media=mixrbv1""
+                ""miximage_url"": ""https://neoclone.screenscraper.fr/api2/mediaJeu.php?media=mixrbv1"",
+                ""fanart_path"": ""roms/2/32/fanart/fanart.png"",
+                ""fanart_url"": ""https://neoclone.screenscraper.fr/api2/mediaJeu.php?media=fanart"",
+                ""video_normalized_path"": ""roms/2/32/video/video-normalized.mp4""
             },
+            ""merged_screenshots"": [""/assets/romm/resources/roms/2/32/screenshots/0.png""],
             ""sibling_roms"": [
                 { ""id"": 33, ""name"": ""Advance Wars 2"", ""fs_name_no_ext"": ""Advance Wars 2"" }
             ],
@@ -47,6 +51,10 @@ namespace RomM.Tests
 
             Assert.Equal("roms/2/32/miximage/miximage.png", rom.SSMetadata.MiximagePath);
             Assert.StartsWith("https://", rom.SSMetadata.MiximageUrl);
+            Assert.Equal("roms/2/32/fanart/fanart.png", rom.SSMetadata.FanartPath);
+            Assert.StartsWith("https://", rom.SSMetadata.FanartUrl);
+            Assert.Equal("roms/2/32/video/video-normalized.mp4", rom.SSMetadata.VideoNormalizedPath);
+            Assert.Equal(new[] { "/assets/romm/resources/roms/2/32/screenshots/0.png" }, rom.MergedScreenshots);
 
             Assert.Single(rom.Siblings);
             Assert.Equal(33, rom.Siblings[0].Id);
@@ -65,6 +73,7 @@ namespace RomM.Tests
             Assert.Null(rom.RomUser);
             Assert.Null(rom.Metadatum);
             Assert.Null(rom.Siblings);
+            Assert.Null(rom.MergedScreenshots);
 
             rom.Normalize();
 
@@ -74,6 +83,7 @@ namespace RomM.Tests
             Assert.NotNull(rom.Tags);
             Assert.NotNull(rom.Files);
             Assert.NotNull(rom.Siblings);
+            Assert.NotNull(rom.MergedScreenshots);
             // metadatum initialises its own collections, so consumers never null-check them either.
             Assert.NotNull(rom.Metadatum.Genres);
         }

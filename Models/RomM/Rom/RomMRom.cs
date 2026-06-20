@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
@@ -220,6 +220,10 @@ namespace RomM.Models.RomM.Rom
         [JsonProperty("sort_comparator")]
         public string SortComparator { get; set; }
 
+        // Already-cached screenshots (e.g. from IGDB), full resource-relative paths.
+        [JsonProperty("merged_screenshots")]
+        public List<string> MergedScreenshots { get; set; }
+
         public bool Processed { get; set; } = false;
 
         /// <summary>
@@ -234,6 +238,7 @@ namespace RomM.Models.RomM.Rom
             Tags = Tags ?? new List<string>();
             Files = Files ?? new List<RomMFile>();
             Siblings = Siblings ?? new List<RomMSibling>();
+            MergedScreenshots = MergedScreenshots ?? new List<string>();
         }
 }
 }

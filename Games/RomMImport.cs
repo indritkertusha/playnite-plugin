@@ -232,10 +232,12 @@ namespace RomM.Games
 
             if (ROM.HasManual && !string.IsNullOrEmpty(ROM.ManualPath))
             {
-                game.Manual = $"{_plugin.Settings.RomMHost}/assets/romm/resources/{ROM.ManualPath}";
+                game.Manual = RomMUrl.Resource(_plugin.Settings.RomMHost, ROM.ManualPath);
                 // ImportGame returns a persisted entity; the manual is set afterwards so it has to be saved explicitly.
                 _plugin.Playnite.Database.Games.Update(game);
             }
+
+            RomMTrailerDownloader.DownloadIfMissing(_plugin.Playnite, _plugin.Logger, game, ROM, _plugin.Settings.RomMHost);
 
             return game;
         }

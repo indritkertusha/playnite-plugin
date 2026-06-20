@@ -49,6 +49,7 @@ namespace RomM.Games
                 // Game icon: Screenscraper miximage only; left blank when absent so another metadata
                 // source can supply one.
                 Icon = GameIcon(romMHost, rom),
+                BackgroundImage = GameBackground(romMHost, rom),
                 LastActivity = rom.RomUser.LastPlayed,
                 // RomM rating is 1-10, Playnite 1-100, so it can only be synced one direction without losing decimals.
                 UserScore = rom.RomUser.Rating * 10,
@@ -71,9 +72,28 @@ namespace RomM.Games
             // *_path is relative to RomM's resource mount (same as manuals), e.g. "roms/2/32/miximage/...";
             // prefer the locally-cached file, falling back to the external Screenscraper url.
             if (!string.IsNullOrEmpty(ss.MiximagePath))
-                return new MetadataFile($"{romMHost}/assets/romm/resources/{ss.MiximagePath}");
+                return new MetadataFile(RomMUrl.Resource(romMHost, ss.MiximagePath));
             if (!string.IsNullOrEmpty(ss.MiximageUrl))
                 return new MetadataFile(ss.MiximageUrl);
+            return null;
+        }
+
+        private static MetadataFile GameBackground(string romMHost, RomMRom rom)
+        {
+            // Fanart is purpose-shot for backgrounds; prefer it, falling back to the first IGDB
+            // screenshot RomM has cached when Screenscraper has no fanart for this rom.
+            var ss = rom.SSMetadata;
+            if (ss != null)
+            {
+                if (!string.IsNullOrEmpty(ss.FanartPath))
+                    return new MetadataFile(RomMUrl.Resource(romMHost, ss.FanartPath));
+                if (!string.IsNullOrEmpty(ss.FanartUrl))
+                    return new MetadataFile(ss.FanartUrl);
+            }
+
+            if (rom.MergedScreenshots != null && rom.MergedScreenshots.Count > 0)
+                return new MetadataFile(RomMUrl.Combine(romMHost, rom.MergedScreenshots[0]));
+
             return null;
         }
     }

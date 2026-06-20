@@ -21,5 +21,13 @@ namespace RomM.Tests
         {
             Assert.Equal("https://h/", RomMUrl.Combine("https://h", null));
         }
+
+        [Theory]
+        [InlineData("https://h", "roms/2/32/fanart/fanart.png", "https://h/assets/romm/resources/roms/2/32/fanart/fanart.png")]
+        [InlineData("https://h/", "/roms/2/32/fanart/fanart.png", "https://h/assets/romm/resources/roms/2/32/fanart/fanart.png")]
+        public void Resource_prefixes_the_resource_mount(string baseUrl, string relative, string expected)
+        {
+            Assert.Equal(expected, RomMUrl.Resource(baseUrl, relative));
+        }
     }
 }

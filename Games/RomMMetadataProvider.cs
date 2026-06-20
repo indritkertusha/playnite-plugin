@@ -30,6 +30,8 @@ namespace RomM.Games
             // RomM 4.9+ can omit these fields; normalise so the metadata mapping never null-derefs.
             romMGame.Normalize();
 
+            RomMTrailerDownloader.DownloadIfMissing(_romM.Playnite, _romM.Logger, game, romMGame, _romM.Settings.RomMHost);
+
             return RomMMetadataMapper.BuildBaseMetadata(romMGame, _romM.Settings.RomMHost, _romM.Playnite.ApplicationSettings.AgeRatingOrgPriority.ToString());
         }
     }

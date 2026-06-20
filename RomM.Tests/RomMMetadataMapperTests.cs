@@ -121,6 +121,35 @@ namespace RomM.Tests
         }
 
         [Fact]
+        public void Background_uses_fanart_path_under_resource_mount()
+        {
+            var rom = NewRom();
+            rom.SSMetadata = new RomMSSMetadata { FanartPath = "roms/2/32/fanart/fanart.png" };
+
+            var md = Map(rom);
+
+            Assert.Equal(Host + "/assets/romm/resources/roms/2/32/fanart/fanart.png", md.BackgroundImage.Path);
+        }
+
+        [Fact]
+        public void Background_falls_back_to_fanart_url_then_first_screenshot()
+        {
+            var rom = NewRom();
+            rom.SSMetadata = new RomMSSMetadata { FanartUrl = "https://ss.example/fanart.png" };
+            Assert.Equal("https://ss.example/fanart.png", Map(rom).BackgroundImage.Path);
+
+            rom = NewRom();
+            rom.MergedScreenshots = new List<string> { "/assets/romm/resources/roms/2/32/screenshots/0.png" };
+            Assert.Equal(Host + "/assets/romm/resources/roms/2/32/screenshots/0.png", Map(rom).BackgroundImage.Path);
+        }
+
+        [Fact]
+        public void Background_is_null_without_fanart_or_screenshots()
+        {
+            Assert.Null(Map(NewRom()).BackgroundImage);
+        }
+
+        [Fact]
         public void Maps_collection_fields_and_skips_empty_strings()
         {
             var rom = NewRom();
